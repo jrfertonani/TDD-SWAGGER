@@ -10,11 +10,13 @@ public class clienteDTO {
     public clienteDTO() {
     }
 
-    public clienteDTO(String nome, String email, String telefone) {
+    public clienteDTO(Integer id, String nome, String email, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
+
     public Integer getId(Integer id) {
         return this.id;
     }
@@ -50,7 +52,8 @@ public class clienteDTO {
     @Override
     public String toString() {
         return "clienteDTO{" +
-                "nome='" + nome + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 ", telefone='" + telefone + '\'' +
                 '}';

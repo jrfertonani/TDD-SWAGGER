@@ -156,6 +156,6 @@ class clienteServiceTest {
 
     private void startCliente(){
         clientes = new Clientes(ID, NOME, EMAIL, FONE);
-        clienteDTO = new clienteDTO( NOME, EMAIL, FONE);
+        clienteDTO = new clienteDTO( ID,NOME, EMAIL, FONE);
     }
 }
