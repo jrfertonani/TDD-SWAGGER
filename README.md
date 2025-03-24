@@ -1,4 +1,4 @@
-# CRUD Spring Boot +  MySQL
+# testes TDD + Documentação Swagger
 
 ## Introdução
 
@@ -17,7 +17,7 @@ Este projeto demonstra uma aplicação com testes unitarios e documentado com sw
 ## Como rodar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/jrfertonani/ttdd-swagger.git
+   git clone https://github.com/jrfertonani/TDD-SWAGGER.git
    
 
    http://localhost:8080/swagger-ui/index.html#/
