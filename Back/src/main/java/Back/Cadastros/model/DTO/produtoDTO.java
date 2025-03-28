@@ -19,6 +19,8 @@ public class produtoDTO {
     @Schema(description = "Categoria do produto", example = "PADARIA", required = true)
     private Categoria categoria;
 
+
+
     public produtoDTO() {
     }
 
