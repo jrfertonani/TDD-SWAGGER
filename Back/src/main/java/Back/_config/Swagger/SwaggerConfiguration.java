@@ -16,6 +16,8 @@ public class SwaggerConfiguration {
                         .title("Gestão de produtos")
                         .description("API responsável pela gestão de produtos")
                         .version("1.0.0"));
+
     }
 
 }
+

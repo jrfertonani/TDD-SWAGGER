@@ -1,39 +1,33 @@
-package Back.Cadastros.cliente.model.entity;
+package Back.Cadastros.model.DTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.io.Serial;
-import java.io.Serializable;
+public class clienteDTO {
 
-
-@Entity
-public class Clientes implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador único do produto", example = "1")
     private Integer id;
 
+    @Schema(description = "Nome do cliente", example = "João", required = true)
     private String nome;
+
+    @Schema(description = "Email do cliente", example = "email@email.com", required = true)
     private String email;
+
+    @Schema(description = "Telefone", example = "4499999999", required = true)
     private String telefone;
 
-    public Clientes() {
+    public clienteDTO() {
     }
 
-    public Clientes(Integer id, String nome, String email, String telefone) {
+    public clienteDTO(Integer id, String nome, String email, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getId(Integer id) {
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -66,7 +60,7 @@ public class Clientes implements Serializable {
 
     @Override
     public String toString() {
-        return "Clientes{" +
+        return "clienteDTO{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +

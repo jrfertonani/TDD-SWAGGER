@@ -1,8 +1,9 @@
 package Back.Cadastros.cliente.service;
 
-import Back.Cadastros.cliente.model.DTO.clienteDTO;
-import Back.Cadastros.cliente.model.entity.Clientes;
-import Back.Cadastros.cliente.repository.clienteRepository;
+import Back.Cadastros.model.DTO.clienteDTO;
+import Back.Cadastros.model.entity.Clientes;
+import Back.Cadastros.repository.clienteRepository;
+import Back.Cadastros.service.clienteService;
 import Back._config.Exeptions.serviceExceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

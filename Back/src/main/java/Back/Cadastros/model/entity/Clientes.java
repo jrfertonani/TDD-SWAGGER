@@ -1,24 +1,39 @@
-package Back.Cadastros.cliente.model.DTO;
+package Back.Cadastros.model.entity;
 
-public class clienteDTO {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+public class Clientes implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nome;
     private String email;
     private String telefone;
 
-    public clienteDTO() {
+    public Clientes() {
     }
 
-    public clienteDTO(Integer id, String nome, String email, String telefone) {
+    public Clientes(Integer id, String nome, String email, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
 
-    public Integer getId(Integer id) {
-        return this.id;
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
@@ -51,7 +66,7 @@ public class clienteDTO {
 
     @Override
     public String toString() {
-        return "clienteDTO{" +
+        return "Clientes{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +

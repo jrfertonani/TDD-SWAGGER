@@ -1,9 +1,10 @@
-package Back.Cadastros.cliente.resource;
+package Back.Cadastros.produto.resource;
 
-import Back.Cadastros.model.DTO.clienteDTO;
-import Back.Cadastros.model.entity.Clientes;
-import Back.Cadastros.resource.clienteController;
-import Back.Cadastros.service.clienteService;
+import Back.Cadastros.model.DTO.produtoDTO;
+import Back.Cadastros.model.Enum.Categoria;
+import Back.Cadastros.model.entity.Produtos;
+import Back.Cadastros.resource.produtoController;
+import Back.Cadastros.service.produtoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,27 +24,27 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class clienteControllerTest {
+class produtoControllerTest {
 
-    private Clientes clientes;
-    private clienteDTO clienteDTO;
-
+    private Produtos produtos;
+    private produtoDTO produtoDTO;
 
     public static final Integer ID   = 1;
     public static final String NOME  = "Joao";
-    public static final String EMAIL = "joao@joao.com";
-    public static final String FONE  = "44999999999";
+    public static final Double PRECO = 2.99;
+    public static final Categoria CATEGORIA = Categoria.valueOf("PADARIA");
     public static final int INDEX = 0;
     public static final String OBJETO_NÃO_ENCONTRADO_ID = "Objeto não encontrado ID: " + ID;
 
     @InjectMocks
-    private clienteController controller;
+    private produtoController controller;
 
     @Mock
     private ModelMapper mapper;
 
     @Mock
-    private clienteService service;
+    private produtoService service;
+
 
     @BeforeEach
     void setUp() {
@@ -52,9 +54,9 @@ class clienteControllerTest {
 
     @Test
     void create() {
-        when(service.create(any(clienteDTO.getClass()))).thenReturn(clientes);
+        when(service.create(any(produtoDTO.getClass()))).thenReturn(produtos);
 
-        ResponseEntity<clienteDTO> response =  controller.create(clienteDTO);
+        ResponseEntity<produtoDTO> response =  controller.create(produtoDTO);
 
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -63,64 +65,54 @@ class clienteControllerTest {
     }
 
     @Test
-    void findAll() {
-        when(service.findAll()).thenReturn(List.of(clientes));
-        when(mapper.map(any(),any())).thenReturn(clienteDTO);
+    void getAll() {
+        when(service.findAll()).thenReturn(List.of(produtos));
+        when(mapper.map(any(),any())).thenReturn(produtos);
 
-        ResponseEntity<List<Clientes>> response = controller.findAll();
+        ResponseEntity<List<Produtos>> response = controller.getAll();
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(ResponseEntity.class, response.getClass());
         assertTrue(response.getBody() instanceof List);
-        assertEquals(Clientes.class, response.getBody().get(INDEX).getClass());
-        assertEquals(Clientes.class, response.getBody().get(INDEX).getClass());
+        assertEquals(Produtos.class, response.getBody().get(INDEX).getClass());
+        assertEquals(Produtos.class, response.getBody().get(INDEX).getClass());
 
         assertEquals(ID, response.getBody().get(INDEX).getId());
         assertEquals(NOME, response.getBody().get(INDEX).getNome());
-        assertEquals(EMAIL, response.getBody().get(INDEX).getEmail());
-        assertEquals(FONE, response.getBody().get(INDEX).getTelefone());
-
+        assertEquals(PRECO, response.getBody().get(INDEX).getPreco());
+        assertEquals(CATEGORIA, response.getBody().get(INDEX).getCategoria());
 
     }
 
     @Test
-    void findByIdSuccess() {
-        when(service.findById(anyInt())).thenReturn(clienteDTO);
-        when(mapper.map(any(),any())).thenReturn(clienteDTO);
+    void getById() {
+        when(service.findById(anyInt())).thenReturn(produtoDTO);
+        when(mapper.map(any(), any())).thenReturn(produtoDTO);
 
-        ResponseEntity<clienteDTO> response = controller.findById(ID);
+        ResponseEntity<produtoDTO> response = controller.getById(ID);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(clienteDTO.getClass(), response.getBody().getClass());
+        assertEquals(produtoDTO.getClass(), response.getBody().getClass());
 
-        assertEquals(ID, response.getBody().getId(ID));
+        assertEquals(ID, response.getBody().getId());
         assertEquals(NOME, response.getBody().getNome());
-        assertEquals(EMAIL, response.getBody().getEmail());
-        assertEquals(FONE, response.getBody().getTelefone());
-
+        assertEquals(PRECO, response.getBody().getPreco());
+        assertEquals(CATEGORIA, response.getBody().getCategoria());
     }
-
 
     @Test
     void upDate() {
-        when(service.upDate(any(),any())).thenReturn(clientes);
-        when(mapper.map(any(),any())).thenReturn(clientes);
+        when(service.upDate(any(), any())).thenReturn(produtos);
+        when(mapper.map(any(),any())).thenReturn(produtos);
 
-        ResponseEntity<clienteDTO> response =  controller.upDate(ID,clienteDTO);
+        ResponseEntity<produtoDTO> response = controller.upDate(ID,produtoDTO);
 
-        assertNotNull(response);
-        assertNotNull(response.getBody());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(clienteDTO.getClass(), response.getBody().getClass());
-
-        assertEquals(ID, response.getBody().getId(ID));
-        assertEquals(NOME, response.getBody().getNome());
-        assertEquals(EMAIL, response.getBody().getEmail());
-        assertEquals(FONE, response.getBody().getTelefone());
+        assertEquals(produtoDTO.getClass(), response.getBody().getClass());
     }
 
     @Test
@@ -136,7 +128,8 @@ class clienteControllerTest {
     }
 
     private void startCliente(){
-        clientes = new Clientes(ID, NOME, EMAIL, FONE);
-        clienteDTO = new clienteDTO( ID,NOME, EMAIL, FONE);
+        produtos = new Produtos(ID, NOME, PRECO, CATEGORIA);
+        produtoDTO = new produtoDTO(ID, NOME, PRECO, CATEGORIA);
     }
+
 }

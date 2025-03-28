@@ -1,8 +1,9 @@
-package Back.Cadastros.cliente.resource;
+package Back.Cadastros.resource;
 
-import Back.Cadastros.cliente.model.DTO.clienteDTO;
-import Back.Cadastros.cliente.model.entity.Clientes;
-import Back.Cadastros.cliente.service.clienteService;
+import Back.Cadastros.model.DTO.clienteDTO;
+import Back.Cadastros.model.DTO.produtoDTO;
+import Back.Cadastros.model.entity.Clientes;
+import Back.Cadastros.service.clienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@Tag(name = "Clientes")
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/clientes")
@@ -29,10 +31,14 @@ public class clienteController {
     @Autowired
     private clienteService service;
 
+
+
     @PostMapping
-    @Tag(name = "Clientes", description = "Cadastro do clientes")
     @Operation(summary = "Cadastro de clientes",description = "Esta função e responsavel para cadastrar cliente")
-    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = clienteDTO.class))})
+    @ApiResponse(responseCode = "200",description = "Cliente cadastrado com sucesso",
+            content = {@Content(schema = @Schema(implementation = clienteDTO.class))})
+    @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<clienteDTO> create(@RequestBody clienteDTO DTO){
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -41,9 +47,11 @@ public class clienteController {
     }
 
     @GetMapping
-    @Tag(name = "Clientes", description = "Informações do clientes")
-    @Operation(summary = "Listagem de clientes",description = "Esta função lista todos os clientes disponiveis")
-    @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = clienteDTO.class))))
+    @Operation(summary = "Listagem de clientes")
+    @ApiResponse(responseCode = "200", description = "Cliente Listado com sucesso",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = clienteDTO.class))))
+    @ApiResponse(responseCode = "400", description = "objectNotFound")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<List<Clientes>> findAll(){
         return ResponseEntity.ok().body(
                 service.findAll()
@@ -52,9 +60,11 @@ public class clienteController {
     }
 
     @GetMapping("/{id}")
-    @Tag(name= "Clientes", description = "Informações sobre cliente ID")
     @Operation(summary = "Busca por cliente ID", description = "Esta função busca um cliente por vez 'ID'")
-    @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Clientes.class))))@ApiResponse(responseCode = "400", description = "ClienteNotFound")
+    @ApiResponse(responseCode = "200", description = "Busca de Produto id com sucesso",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = Clientes.class))))
+    @ApiResponse(responseCode = "400", description = "objectNotFound")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<clienteDTO> findById(@PathVariable Integer id){
         return ResponseEntity.ok().body(
                 mapper.map(service.findById(id)
@@ -63,9 +73,11 @@ public class clienteController {
     }
 
     @PutMapping("/{id}")
-    @Tag(name = "Clientes", description = "Alterar cadastro de clientes")
-    @Operation(summary = "Alterar cliente",description = "Esta função e responsavel para alterar caastro de cliente")
-    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = clienteDTO.class))})
+    @Operation(summary = "Alterar cliente",description = "Esta função e responsavel para alterar cadastro de cliente")
+    @ApiResponse(responseCode = "200", description = "Cliente alterado com sucesso",
+            content = {@Content(schema = @Schema(implementation = clienteDTO.class))})
+    @ApiResponse(responseCode = "400", description = "objectNotFound")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<clienteDTO> upDate(@PathVariable Integer id,
                                              @RequestBody clienteDTO DTO){
         DTO.setId(id);
@@ -74,9 +86,11 @@ public class clienteController {
     }
 
     @DeleteMapping("/{id}")
-    @Tag(name = "Clientes", description = "Remover clientes por vez")
     @Operation(summary = "Remover cliente", description = "Esta função e responsavel para remover clientes")
-    @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Clientes.class))))@ApiResponse(responseCode = "400", description = "ClienteNotFound")
+    @ApiResponse(responseCode = "200", description = "Cliente deletado com sucesso",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = Clientes.class))))
+    @ApiResponse(responseCode = "400", description = "objectNotFound")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();

@@ -1,8 +1,8 @@
-package Back.Cadastros.cliente.service;
+package Back.Cadastros.service;
 
-import Back.Cadastros.cliente.model.DTO.clienteDTO;
-import Back.Cadastros.cliente.model.entity.Clientes;
-import Back.Cadastros.cliente.repository.clienteRepository;
+import Back.Cadastros.model.DTO.clienteDTO;
+import Back.Cadastros.model.entity.Clientes;
+import Back.Cadastros.repository.clienteRepository;
 import Back._config.Exeptions.serviceExceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
